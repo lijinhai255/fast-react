@@ -117,14 +117,34 @@ const App: React.FC = () => {
       setResultArrData(worldArr);
     }
   }, [world]);
+  const handlePaste = (event: any) => {
+    const items = (event?.clipboardData || event?.originalEvent?.clipboardData)
+      ?.items;
+    Object.keys(items).forEach(index => {
+      const item = items[index];
+      if (item.kind === 'file') {
+        const blob = item.getAsFile();
+        if (blob.type.startsWith('image')) {
+          const file = new File([blob], 'pasted-image.png', {
+            type: blob.type,
+          });
+          // uploadRef.current.uploader.methods.addFile(file);
+          console.log(file, 'file');
+        }
+      }
+    });
+  };
+
   return (
     <>
-      <Dragger {...TableUploadProps(setFileList, setWorld)}>
-        <p className='ant-upload-drag-icon'>
-          <InboxOutlined />
-        </p>
-        <p className='ant-upload-text'>识别表格</p>
-      </Dragger>
+      <div onPaste={handlePaste}>
+        <Dragger {...TableUploadProps(setFileList, setWorld)}>
+          <p className='ant-upload-drag-icon'>
+            <InboxOutlined />
+          </p>
+          <p className='ant-upload-text'>识别表格</p>
+        </Dragger>
+      </div>
       <Image width='100%' src={fileList?.image} />
       <Title level={4}>
         识别内容{' '}

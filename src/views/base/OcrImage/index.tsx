@@ -1,8 +1,8 @@
 import { InboxOutlined } from '@ant-design/icons';
-import { Upload, Image, Typography, Select } from 'antd';
+import { Upload, Image, Typography, Select, message } from 'antd';
 import React, { useEffect, useState } from 'react';
 // import CodeEditor from '../../../components/CodeMirror/index';
-import { TableUploadProps, extractChineseWords } from '@/utils';
+import { TableUploadProps, extractChineseWords, fileToBase64 } from '@/utils';
 import { getTransLate } from '@/api/Table';
 // import { getTransLate } from '@/api/Table';
 
@@ -33,7 +33,56 @@ const App: React.FC = () => {
     'operation',
     'There is currently no data available',
   ]);
+  useEffect(() => {
+    const handlePaste = (event: any) => {
+      const items = event.clipboardData?.items;
+      if (items) {
+        Array.from(items).forEach((item: any) => {
+          if (item?.type.indexOf('image') === 0) {
+            const file = item?.getAsFile();
+            if (file) {
+              console.log('Pasted image:', file);
+              fileToBase64(file, (base64: any) => {
+                const Imagedata = {
+                  filename: file.name,
+                  image: base64,
+                };
 
+                // 这里可以进行自定义上传操作，如使用fetch API
+                fetch(`http://localhost:3000/api/ai/ocrImage`, {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify(Imagedata),
+                })
+                  .then(response => response.json())
+                  .then(data => {
+                    message.success(`${file.name} file uploaded successfully.`);
+                    setFileList({ ...Imagedata });
+                    // setResultData({ ...data });
+                    // const finalData = extractWordsFromTables(data);
+                    setWorld(data);
+                  })
+                  .catch(error => {
+                    message.error(`${file.name} file upload failed.${error}`);
+                  });
+
+                // 返回 false 以停止自动上传
+                return false;
+              });
+            }
+          }
+        });
+      }
+    };
+
+    window.addEventListener('paste', handlePaste);
+
+    return () => {
+      window.removeEventListener('paste', handlePaste);
+    };
+  }, []);
   // 获取表格中的中文
   const getTransLateFn = async () => {
     const translatePromises = resultData.map((text: string) => {

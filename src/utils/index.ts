@@ -412,6 +412,7 @@ export const TableUploadProps = (
         message.error(`${info.file.name} file upload failed.`);
       }
     },
+    showUploadList: false,
     beforeUpload(file: File) {
       fileToBase64(file, (base64: any) => {
         const Imagedata = {
