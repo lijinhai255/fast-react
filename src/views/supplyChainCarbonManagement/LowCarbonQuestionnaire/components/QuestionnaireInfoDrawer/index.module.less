@@ -1,0 +1,58 @@
+.footerStyle {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 9;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+  width: 100%;
+  height: 60px;
+  padding: 14px 16px;
+  background-color: @whiteBg;
+  box-shadow: 0 -1px 2px 0 rgb(0 0 0 / 3%);
+  box-shadow: 0 0 5px rgb(0 0 0 / 5%);
+  transition: all 0.2s;
+
+  .button {
+    height: 31px;
+    margin-left: 12px;
+    padding: 0 20px;
+  }
+}
+
+.tabGroup {
+  margin-bottom: 16px;
+}
+
+.questionBasic {
+  padding-bottom: 60px;
+
+  .infoHead {
+    padding: 16px 0;
+    color: #999ea4;
+    font-weight: 400;
+    font-size: 12px;
+    font-style: normal;
+    line-height: 18px;
+    border-bottom: 1px solid #ebedf0;
+
+    .infobasic {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      h3 {
+        color: #343a40;
+        font-weight: 500;
+        font-size: 20px;
+        font-style: normal;
+        line-height: 28px;
+      }
+
+      .designOrg {
+        margin-right: 24px;
+      }
+    }
+  }
+}

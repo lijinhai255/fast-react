@@ -1,0 +1,70 @@
+.modelButton {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-start;
+  width: 100%;
+
+  .btnCard {
+    width: 290px;
+    height: 160px;
+    padding: 16px;
+    padding-right: 8px;
+    line-height: 22px;
+    background: @white;
+    border: 1px solid #d2d6da;
+    border-radius: 4px;
+    cursor: pointer;
+
+    .cardHeader {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 12px;
+      font-weight: 500;
+      font-size: 14px;
+      font-style: normal;
+
+      .iconLeft {
+        flex-shrink: 0;
+        width: 24px;
+        height: 24px;
+        font-size: 24px;
+      }
+
+      .modalName {
+        width: 208px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      .iconChecked {
+        color: @primary-color;
+        font-size: 16px;
+      }
+    }
+
+    .outline {
+      display: -webkit-box;
+      width: 100%;
+      margin-bottom: 0;
+      padding-right: 8px;
+      overflow: hidden;
+      color: #999ea4;
+      font-weight: 400;
+      font-size: 12px;
+      font-style: normal;
+      line-height: 18px;
+      text-align: justify;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 5;
+    }
+  }
+
+  .radioChecked {
+    background: @white;
+    border: 1px solid @primary-color;
+    border-radius: 4px;
+  }
+}

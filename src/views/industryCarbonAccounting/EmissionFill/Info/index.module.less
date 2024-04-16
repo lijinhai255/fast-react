@@ -1,0 +1,36 @@
+@import url('@styles/var.less');
+
+.wrapper {
+  flex: 1 1 auto;
+  height: 100%;
+  margin-bottom: @GlobalFormActionsHeight;
+  overflow: hidden;
+  background-color: @whiteBg;
+
+  &.detailWrapper {
+    .accountingCycleWrapper {
+      height: calc(100vh - 210px);
+    }
+  }
+
+  .cycleTabs {
+    :global {
+      .ant-tabs-tab:first-of-type {
+        margin-left: 16px;
+      }
+
+      .ant-tabs-top > .ant-tabs-nav {
+        margin: 0;
+      }
+    }
+  }
+
+  .accountingCycleWrapper {
+    height: calc(100vh - 164px);
+    overflow: hidden;
+  }
+
+  .approverWrapper {
+    padding: 16px;
+  }
+}

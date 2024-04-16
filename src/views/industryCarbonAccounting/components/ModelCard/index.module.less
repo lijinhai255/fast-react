@@ -1,0 +1,61 @@
+@import url('@styles/var.less');
+
+.wrapper {
+  .contentWrapper {
+    box-sizing: border-box;
+    height: 158px;
+    padding: 16px 8px;
+    border: 1px solid #d2d6da;
+    border-radius: 4px;
+    cursor: pointer;
+
+    &.selected {
+      border: 1px solid @primary-color;
+
+      .headerSection {
+        .selectIcon {
+          display: block;
+        }
+      }
+    }
+
+    .headerSection {
+      position: relative;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+
+      .tagIcon {
+        font-size: 24px;
+      }
+
+      .title {
+        max-width: calc(100% - 64px);
+        color: var(--text, #343a40);
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 22px;
+      }
+
+      .selectIcon {
+        position: absolute;
+        right: 0;
+        display: none;
+        color: @primary-color;
+        font-size: 16px;
+      }
+    }
+
+    .contentSection {
+      margin-top: 13px;
+      padding: 0 8px;
+
+      .content {
+        color: var(--text, #999ea4);
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 18px;
+      }
+    }
+  }
+}

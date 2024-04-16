@@ -1,0 +1,27 @@
+@import url('@styles/var.less');
+
+.processDescribeWrapper {
+  .headerWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    font-weight: 500;
+
+    .actionBtnWrapper {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+  }
+
+  .name {
+    max-width: calc((100vw - 965px) / 2);
+    color: @primary-color;
+    cursor: pointer;
+  }
+
+  .systemBoundary {
+    max-width: calc((100vw - 965px) / 2);
+  }
+}

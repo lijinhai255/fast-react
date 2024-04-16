@@ -1,0 +1,58 @@
+.uploadWrapper {
+  margin-top: 8px;
+
+  .uploadLabel {
+    margin-bottom: 8px;
+    color: rgb(0 0 0 / 85%);
+    font-size: 14px;
+  }
+
+  .tips {
+    margin-bottom: 8px;
+    color: #999;
+    font-size: 12px;
+  }
+}
+
+.accountsManageInfoBasicRadioLabel {
+  line-height: 20px;
+}
+
+p {
+  margin: 0;
+}
+
+.accountsManageInfoBasicRadioTips {
+  margin-top: 8px;
+  color: #999f;
+  font-size: 12px;
+  line-height: 20px;
+}
+
+.accountsWrapper {
+  && {
+    margin-bottom: @GlobalFormActionsHeight;
+  }
+
+  .schemaMain {
+    :global {
+      .ant-formily-item-feedback-layout-loose {
+        margin-bottom: 10px;
+      }
+
+      .ant-formily-item {
+        margin-bottom: 10px;
+      }
+    }
+  }
+
+  .schemaMain:last-of-type {
+    margin-top: 15px;
+  }
+}
+
+.datePicker {
+  :global(.ant-picker-range-wrapper.ant-picker-date-range-wrapper) {
+    min-width: auto !important;
+  }
+}

@@ -1,0 +1,35 @@
+.wrapper {
+  padding: 0 !important;
+}
+
+.bread-warpper {
+  margin-top: 42px;
+}
+
+.unTopWrapper > div:first-of-type {
+  border: none;
+}
+
+.affix {
+  position: fixed;
+  top: 50px;
+  left: @sideBarCloseWidth;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  width: calc(100% - @sideBarCloseWidth);
+  padding: 12px 16px 16px 26px;
+  background: #fff;
+  box-shadow: 2px 0 8px 0 rgb(0 0 0 / 4%);
+
+  &.sideOpen {
+    left: @sideBarWidth;
+    width: calc(100% - @sideBarWidth);
+    padding: 12px 26px 12px 16px;
+  }
+}
+
+.picker {
+  width: 192px;
+  margin-right: 12px;
+}

@@ -1,0 +1,323 @@
+/**
+ * 全局默认样式，
+ * 也有覆盖 antd 的默认样式
+ */
+@import url('./var.less');
+@import url('antd/dist/antd.less');
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  color: @text-color;
+  font-family: 'PingFang SC', PingFangSC-Regular, SourceHanSansCN-Medium,
+    'HarmonyOS_Sans_Regular', SourceHanSansCN;
+}
+@font-face {
+  font-family: 'HarmonyOS_Sans_Regular';
+  src: url('https://carbonstop-saas.oss-cn-beijing.aliyuncs.com/saas-product/HarmonyOS_Sans_Regular.ttf');
+}
+
+@font-face {
+  font-family: SourceHanSansCN;
+  src: url('https://carbonstop-saas.oss-cn-beijing.aliyuncs.com/saas-product/SourceHanSansCN-Regular-2.otf');
+}
+
+.layout {
+  &__loading {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+  }
+}
+
+.align {
+  &--between {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &--left {
+    display: flex;
+  }
+
+  &--right {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  &--around {
+    display: flex;
+    justify-content: space-around;
+  }
+}
+
+.vertical {
+  &--top {
+    display: flex;
+  }
+
+  &-middle {
+    display: flex;
+    align-items: center;
+  }
+
+  &-bottom {
+    display: flex;
+    align-items: flex-end;
+  }
+}
+
+/** 修改表单报错展示位置 */
+.ant-form-item .ant-form-item-explain-error {
+  text-align: right;
+}
+
+/* antd select 选中样式修改 */
+body .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+  color: @primary-color;
+}
+
+/** 修改message 样式 */
+.ant-message-notice {
+  .ant-message-notice-content {
+    padding: 6px 20px;
+    border-radius: 4px;
+  }
+
+  &-error {
+    .ant-message-notice-content {
+      color: @dangerTextColor;
+      background: @errorMessageBg;
+      border: 1px solid @dangerBg;
+    }
+  }
+
+  &-success {
+    .ant-message-notice-content {
+      color: @primary-color;
+      background: @successMessageBg;
+      border: 1px solid @primary-color;
+    }
+  }
+}
+
+/** formily readonly style override */
+.ant-formily-layout {
+  /** 输入框样式重写 */
+  .ant-formily-item-control-content-component {
+    /** input override */
+    .ant-space,
+      /** select override */
+    .ant-form-text {
+      width: 100%;
+      padding: 0 12px;
+      background-color: @readonlyComponentBg;
+    }
+
+    /** select override */
+    .ant-form-text {
+      .ant-tag {
+        background-color: transparent;
+        border: none;
+      }
+    }
+  }
+
+  .ant-formily-item-label {
+    margin-bottom: 8px;
+  }
+
+  /* 修复详情查看时不会自动换行问题 */
+  .ant-space-item,
+  .ant-form-text {
+    word-break: break-all;
+  }
+}
+
+// .ant-modal {
+//   position: absolute;
+//   left: 50%;
+//   top: 50%;
+//   transform: translate(-50%, -50%);
+// }
+.modal_del {
+  .ant-modal-body {
+    padding: 20px;
+  }
+
+  .anticon-exclamation-circle {
+    display: none;
+  }
+}
+.modal_text {
+  color: #fba93e;
+}
+.list_showMobile {
+  float: right;
+  color: @primary-color;
+  cursor: pointer;
+}
+/**自定义tag样式****/
+.customTag {
+  padding: 1px 8px !important;
+  font-size: 14px !important;
+  border: none !important;
+  border-radius: 100px !important;
+  font-weight: 400;
+  font-family: 'PingFang SC';
+  padding-left: 0;
+  // border-radius: 15px;
+}
+.customTag.customTag-gold {
+  color: rgba(251, 169, 62, 1);
+  text-align: center;
+  background: rgba(255, 251, 240, 1);
+}
+.customTag.customTag-orange {
+  color: rgba(249, 135, 53, 1);
+  text-align: center;
+  background: rgba(252, 243, 237, 1);
+}
+
+.customTag.customTag-green {
+  color: rgba(12, 191, 159, 1);
+  text-align: center;
+  background: rgba(230, 255, 246, 1);
+}
+
+.customTag.customTag-blue {
+  color: rgba(52, 145, 250, 1);
+  text-align: center;
+  background: rgba(240, 249, 255, 1);
+}
+
+.customTag.customTag-cyan {
+  color: rgba(0, 192, 205, 1);
+  text-align: center;
+  background: rgba(233, 251, 252, 1);
+}
+
+.customTag.customTag-red {
+  color: rgba(237, 85, 85, 1);
+  text-align: center;
+  background: rgba(255, 242, 240, 1);
+}
+
+.customTag-geekblue {
+  color: #12b0eb;
+  text-align: center;
+  background: rgb(18 176 235 / 6%);
+}
+
+.customTag-undefined {
+  color: @text-color-2;
+  text-align: center;
+}
+.customTabs {
+  // background: red;
+  .ant-tabs-tab {
+    padding-top: 0;
+    color: #999999;
+  }
+}
+.ant-formily-item-label {
+  label {
+    color: @textColor;
+    font-size: 14px;
+    font-weight: 400;
+    font-family: 'PingFang SC';
+    text-align: left;
+  }
+}
+.ant-input[disabled],
+.ant-input-number-[disabled],
+.ant-select[disable],
+.ant-formily-layout .ant-formily-item-control-content-component .ant-space,
+.ant-formily-layout .ant-formily-item-control-content-component .ant-form-text,
+.ant-input-number-disabled,
+.ant-select-disabled.ant-select:not(.ant-select-customize-input)
+  .ant-select-selector,
+.ant-picker-input > input[disabled] {
+  background-color: #f7f8f9 !important;
+  color: @textColor !important;
+  font-size: 14px;
+  font-weight: 400;
+  font-family: 'PingFang SC';
+  text-align: left;
+  border-radius: 4px;
+}
+
+.ant-input-affix-wrapper-disabled {
+  border: none;
+  border-radius: 4px;
+}
+
+.ant-modal {
+  .ant-modal-header {
+    padding: 20px 20px 0px;
+    border-bottom: none;
+  }
+
+  .ant-modal-body {
+    padding: 24px 20px 0px;
+    .ant-formily-item-feedback-layout-loose {
+      margin-bottom: 24px;
+    }
+    .ant-formily-item-feedback-layout-loose:last-of-type {
+      margin-bottom: 0;
+    }
+  }
+
+  .ant-modal-footer {
+    padding: 24px 20px 20px;
+    border-top: none;
+  }
+  .ant-modal-confirm-btns {
+    padding: 0px 0px 20px 0px;
+    border-top: none;
+  }
+}
+
+.tr-search {
+  .fr-field-object .fr-field {
+    padding-right: 16px !important;
+    .fr-item-wrapper button.mr {
+      margin-right: 8px;
+    }
+  }
+}
+.margin0 {
+  margin: 0;
+}
+.padding0 {
+  padding: 0;
+}
+
+.inputNumberWrapper {
+  position: relative;
+
+  :global {
+    margin-left: 0;
+  }
+}
+
+.inputNumberWrapper::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 30px;
+  height: 100%;
+  background: #fff;
+  border-radius: 4px;
+  content: '';
+}
+
+.ant-pro-form-light-filter-container {
+  gap: 12px;
+}

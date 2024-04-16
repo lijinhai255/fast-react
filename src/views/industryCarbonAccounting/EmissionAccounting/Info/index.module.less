@@ -1,0 +1,61 @@
+@import url('@styles/var.less');
+
+.wrapper {
+  flex: 1 1 auto;
+  margin-bottom: @GlobalFormActionsHeight;
+  background-color: @whiteBg;
+
+  &.detailWrapper {
+    overflow: hidden;
+  }
+
+  .createInfoWrapper {
+    padding: 16px;
+
+    .accountModelWrapper {
+      .label {
+        margin: 0;
+        color: #666f;
+        font-weight: 400;
+        font-size: 14px;
+        text-align: left;
+
+        .requireStar {
+          display: inline-block;
+          color: #ff4d4f;
+          font-family: SimSun, sans-serif;
+        }
+      }
+
+      .modelWrapper {
+        margin-top: 8px;
+      }
+
+      .requireTips {
+        min-height: 22px;
+        margin: 0;
+        color: #ff4d4f;
+        line-height: 22px;
+      }
+    }
+  }
+
+  .detailInfoWrapper {
+    .cycleTabs {
+      :global {
+        .ant-tabs-tab:first-of-type {
+          margin-left: 16px;
+        }
+
+        .ant-tabs-top > .ant-tabs-nav {
+          margin: 0;
+        }
+      }
+    }
+
+    .accountingCycleWrapper {
+      height: calc(100vh - 210px);
+      overflow: hidden;
+    }
+  }
+}

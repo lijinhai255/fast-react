@@ -1,0 +1,45 @@
+@import url('@styles/var.less');
+
+/** 列表 */
+.supplierListWrapper {
+  :global {
+    header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 16px;
+
+      h3 {
+        flex: 1;
+      }
+
+      .ant-btn {
+        margin-left: 12px;
+      }
+    }
+  }
+
+  .checkAll {
+    position: relative;
+    bottom: 40px;
+    width: 300px;
+    padding-left: 8px;
+
+    .selectedNum {
+      padding-left: 8px;
+      color: #999ea4;
+      font-weight: 400;
+      font-size: 14px;
+      font-style: normal;
+      line-height: 22px;
+    }
+  }
+}
+
+.columnText {
+  color: #0cbf9f;
+  font-weight: 400;
+  font-size: 14px;
+  font-style: normal;
+  line-height: 20px;
+  cursor: pointer;
+}

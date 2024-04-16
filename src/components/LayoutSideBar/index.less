@@ -1,0 +1,129 @@
+@import url('@/styles/var.less');
+
+/** 侧边栏样式修改 */
+.ant-menu.sidebar-menu {
+  &&& {
+    min-width: auto;
+
+    /*** 修改菜单间距start */
+    &:first-child {
+      padding-top: 6px;
+    }
+
+    .ant-menu-item,
+    .ant-menu-submenu-title {
+      margin: 4px 0 0;
+    }
+
+    /*** 修改菜单间距end */
+
+    /*** 防止出现横向滚动条 */
+    .ant-menu-item,
+    .ant-menu-submenu-title {
+      max-width: 100%;
+    }
+  }
+
+  // &::after {
+  //   content: '';
+  //   display: block;
+  //   width: 12px;
+  //   height: 12px;
+  //   background-color: @whiteBg;
+  //   overflow: hidden;
+  //   position: absolute;
+  //   top: 10px;
+  //   left: 0;
+  //   transform: translateX(-50%) rotate(45deg);
+  // }
+  &&& .ant-menu-item-selected {
+    color: @primary-color;
+    background-color: fade(@primary-color, 6);
+
+    &::after {
+      display: none;
+    }
+  }
+}
+.layout {
+  &__side-bar {
+    position: relative;
+    z-index: 10;
+    flex: 0 0 @sideBarWidth;
+    box-shadow: 2px 0 6px rgb(0 21 41 / 35%);
+    transition: all 0.2s;
+
+    /** todo antdv5 隐藏禁用的菜单 'p-name' 只针对父级菜单才添加此条件 */
+    // &&& .layout-menu-item-group.p-name > div:first-child {
+    //   display: none;
+    // }
+    /* antd v4 */
+    &&& .ant-menu-root {
+      .p-name > .ant-menu-item-group-title {
+        display: none;
+      }
+    }
+
+    &--dark {
+      background: @menuDarkColor;
+
+      .layout__side-bar-title {
+        color: #fff;
+      }
+    }
+
+    &--light {
+      background-color: #fff;
+      box-shadow: 2px 0 8px 0 rgb(29 35 41 / 5%);
+    }
+
+    &--close {
+      flex: 0 0 @sideBarCloseWidth;
+      // width: @sideBa-closerCloseWidth;
+    }
+
+    &--side {
+      display: flex;
+      flex-flow: column;
+      ::-webkit-scrollbar {
+        width: 0px;
+      }
+      .layout__side-bar__menu {
+        flex: 1 1 auto;
+      }
+    }
+
+    &--top {
+      display: flex;
+      align-items: center;
+      box-shadow: none;
+
+      .ant-menu,
+      .ant-menu-submenu {
+        height: @headerHeight;
+        line-height: @headerHeight - 1;
+      }
+    }
+
+    .ant-menu,
+    .ant-menu-submenu {
+      border: none;
+    }
+
+    &__menu {
+      overflow: auto;
+      // padding: 0 8px;
+    }
+  }
+}
+
+/* 自定义菜单悬浮框样式 */
+.layout-menu-submenu-popup {
+  .layout-menu-vertical.layout-menu-sub {
+    min-width: auto;
+  }
+
+  span[role='img'].anticon {
+    display: none;
+  }
+}

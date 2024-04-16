@@ -1,0 +1,64 @@
+@import url('@styles/var.less');
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - @GlobalFormActionsHeight);
+  margin: 12px 56px;
+  padding: 0 24px 16px;
+  overflow: hidden;
+  background-color: @whiteBg;
+
+  .tableWrapper {
+    flex: 1;
+    height: 100%;
+    overflow: hidden;
+
+    .icon {
+      margin-right: 8px;
+      color: #999ea4;
+      cursor: pointer;
+    }
+
+    .expandIcon {
+      transform: rotate(-90deg);
+    }
+
+    :global {
+      .ant-table-thead > tr > th,
+      .ant-table-tbody > tr > td {
+        padding: 13px 16px;
+      }
+
+      .ant-progress-outer {
+        margin-right: calc(-2em - 24px);
+        padding-right: calc(2em + 24px);
+      }
+
+      .ant-progress-outer .ant-progress-inner {
+        flex: none;
+        flex-grow: 0;
+        order: 0;
+        height: 12px;
+        background-color: #f7f8f9;
+        border-radius: 0;
+      }
+
+      .ant-progress-outer .ant-progress-inner .ant-progress-bg {
+        height: 12px !important;
+        background: @primary-color;
+        border-radius: 0;
+      }
+
+      .ant-progress-text {
+        color: var(--text-gray-8-primary, #343a40);
+        font-weight: 400;
+        font-size: 14px;
+        font-family: 'PingFang SC';
+        font-style: normal;
+        line-height: 22px;
+        text-align: left;
+      }
+    }
+  }
+}

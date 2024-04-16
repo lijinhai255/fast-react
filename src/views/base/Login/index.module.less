@@ -1,0 +1,67 @@
+@import url('@styles/var.less');
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+  background: url('../../../../public/bg.png') center center;
+  background-color: @backgroudGray;
+  background-size: cover;
+
+  .primaryColor {
+    color: @primary-color;
+  }
+
+  .main {
+    display: flex;
+    flex-flow: column;
+    width: 380px;
+    padding: 50px 30px;
+    font-size: 24px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 50px 0 rgb(255 255 255 / 48%);
+
+    header {
+      font-weight: bold;
+    }
+
+    .primaryColor {
+      margin-right: 8px;
+    }
+
+    .form {
+      margin-top: 50px;
+
+      :global(.ant-input-affix-wrapper),
+      :global(.ant-input) {
+        height: 44px;
+
+        :global(.ant-input) {
+          height: auto;
+        }
+      }
+
+      :global(.ant-form-item) {
+        margin-bottom: 40px;
+      }
+
+      .submit {
+        width: 100%;
+        height: 44px;
+        margin-top: 20px;
+      }
+    }
+  }
+
+  .logo {
+    position: absolute;
+    top: 73px - 58px;
+    left: 75px;
+    color: @primary-color;
+    font-size: 150px;
+    line-height: 1;
+  }
+}

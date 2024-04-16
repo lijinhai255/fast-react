@@ -1,0 +1,59 @@
+.radioGroupOptionWrapper {
+  display: flex;
+  align-items: center;
+}
+
+p {
+  margin-bottom: 0;
+}
+
+.normalRadioButton {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  height: 32px;
+  padding: 10px 24px;
+  color: #b5b8bb;
+  background: #fff;
+  border: 1px solid #ebedf0;
+  border-radius: 4px;
+  cursor: pointer;
+
+  & + .normalRadioButton {
+    margin-left: 10px;
+  }
+}
+
+.radioChecked {
+  color: #0cbf9f;
+  border: 1px solid #0cbf9f;
+}
+
+.radioDisabled {
+  cursor: not-allowed;
+}
+
+.readPretty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  max-width: 102px;
+  height: 32px;
+  padding: 10px 16px;
+  background: #f7f8f9;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.checkedIcon {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+.icon {
+  margin-right: 4px;
+}

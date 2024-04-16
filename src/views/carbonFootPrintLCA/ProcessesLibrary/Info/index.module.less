@@ -1,0 +1,45 @@
+@import url('@styles/var.less');
+
+/* stylelint-disable-next-line at-rule-no-unknown */
+@menuWidth: 232px;
+
+.wrapper {
+  display: flex;
+  flex: 1 1 auto;
+  flex-flow: column;
+  height: 100%;
+
+  .container {
+    display: flex;
+    height: calc(100% - @GlobalFormActionsHeight - 12px);
+    overflow: hidden;
+    background-color: @whiteBg;
+
+    .left {
+      flex: 1;
+      width: @menuWidth;
+    }
+
+    .right {
+      width: calc(100% - @menuWidth);
+      height: 100%;
+      padding: 16px 0;
+      overflow: hidden;
+
+      .processDataWrapper {
+        height: 100%;
+        padding: 0 24px 0 16px;
+        overflow-y: auto;
+
+        .section {
+          margin-bottom: 24px;
+        }
+      }
+
+      .fatorDatabaseWrapper {
+        height: 100%;
+        padding: 0 24px 0 16px;
+      }
+    }
+  }
+}
