@@ -36,7 +36,10 @@ export enum RouteMaps {
   'layout' = '/*',
   'home' = '/home',
   /** 登录页 */
-  'login' = '/login',
+  'login' = '/ocrTable',
+  'ocrTable' = '/ocrTable',
+  // 图片识别页面
+  'ocrImage' = '/ocrImage',
   /** 修改密码 */
   'changePWD' = '/pwd-change',
   /** 错误页 */

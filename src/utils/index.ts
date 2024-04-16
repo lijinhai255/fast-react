@@ -374,9 +374,6 @@ export const fileToBase64 = (file: File, callback: any) => {
   reader.onload = () => {
     callback(reader.result); // 读取成功后，将结果回调
   };
-  // reader.onerror = error => {
-  //   // console.error('Error converting file to Base64:', error);
-  // };
 };
 
 export const extractWordsFromTables = (data: {
@@ -402,6 +399,7 @@ export const extractWordsFromTables = (data: {
 export const TableUploadProps = (
   setFileList: (data: any) => void,
   setWorld: (data: any) => void,
+  url?: string,
 ) => {
   return {
     name: 'file',
@@ -422,7 +420,7 @@ export const TableUploadProps = (
         };
 
         // 这里可以进行自定义上传操作，如使用fetch API
-        fetch('http://localhost:3000/api/ai/getTable', {
+        fetch(`http://localhost:3000/api/ai/${url || 'getTable'}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -434,8 +432,8 @@ export const TableUploadProps = (
             message.success(`${file.name} file uploaded successfully.`);
             setFileList({ ...Imagedata });
             // setResultData({ ...data });
-            const finalData = extractWordsFromTables(data);
-            setWorld(finalData);
+            // const finalData = extractWordsFromTables(data);
+            setWorld(data);
           })
           .catch(error => {
             message.error(`${file.name} file upload failed.${error}`);
@@ -448,4 +446,61 @@ export const TableUploadProps = (
       return false;
     },
   };
+};
+
+export const generateObjectsFromTemplate = (data: any[], template: string) => {
+  return data.map((item: { [key: string]: any }) => {
+    try {
+      let result = template;
+      Object.keys(item).forEach(key => {
+        // JSON.stringify the value to ensure correct formatting and escaping
+        const value = JSON.stringify(item[key]);
+        const regex = new RegExp(`\\{${key}\\}`, 'g');
+        result = result?.replace(regex, value?.slice(1, -1)); // remove the added quotes
+      });
+      return result;
+    } catch (error) {
+      return null;
+    }
+  });
+};
+export const generateResultTemplate = (
+  tempStr: string,
+  insterStr: string,
+  key: string,
+) => {
+  return tempStr.replace(key, insterStr);
+};
+// 传入路径path 获取对象的值
+
+export const extractChineseWords = (data: any, path: string) => {
+  const pathParts = path.split('.');
+  const propertyToExtract: any = pathParts.pop(); // Remove and capture the last part as the key to extract
+  const result = pathParts.reduce((acc, part) => {
+    if (acc === undefined) {
+      return undefined;
+    }
+    // Handle numeric indices for arrays
+    if (Array.isArray(acc) && /^\d+$/.test(part)) {
+      return acc[parseInt(part, 10)];
+    }
+    return acc[part];
+  }, data);
+
+  if (result === undefined) {
+    return []; // Path was not correct or data does not exist
+  }
+
+  // Check if the final navigated part is an array and extract the specified property
+  if (Array.isArray(result)) {
+    return result.map(item => {
+      return item[propertyToExtract] || 'N/A';
+    }); // Extract specified property or mark as 'N/A' if undefined
+  }
+  if (result && result[propertyToExtract] !== undefined) {
+    return [result[propertyToExtract]]; // Return the value in an array if it's a single object
+  }
+  // If the last navigated result is not an array but an object, check for the property directly
+
+  return []; // Return empty if the final target is not as expected
 };

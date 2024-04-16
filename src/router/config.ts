@@ -109,6 +109,14 @@ export const baseRoute: Routes[] = [
     },
   },
   {
+    path: RouteMaps.ocrImage,
+    component: lazy(() => import('@views/base/OcrImage')),
+    meta: {
+      title: '图片识别',
+      auth: false,
+    },
+  },
+  {
     path: RouteMaps.changePWD,
     component: lazy(() => import('@views/base/ChangePWD')),
     meta: {
