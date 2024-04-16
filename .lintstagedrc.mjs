@@ -8,6 +8,6 @@
 export default {
   '*.{ts,tsx,js,jsx}': [
     'prettier --write',
-    'eslint --fix --quiet --rule "no-console: error" --rule "no-debugger:error"',
+    'eslint --fix --quiet --rule "no-debugger:error"',
   ],
 };

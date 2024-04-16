@@ -110,7 +110,7 @@ const App: React.FC = () => {
     if (resultData) {
       getTransLateFn();
     }
-  }, [resultData]);
+  }, [resultData, currentLanguage]);
   console.log(world, 'world-world');
   return (
     <>
