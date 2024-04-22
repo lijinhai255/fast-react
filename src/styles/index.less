@@ -8,7 +8,15 @@
 * {
   box-sizing: border-box;
 }
-
+/* 定义变量 */
+:root {
+  --text-direction: ltr;
+  --primary-font-size: 16px;
+  --transform: unset;
+}
+[dir='rtl'] * {
+  transform: var(--transform);
+}
 html,
 body {
   margin: 0;
@@ -16,6 +24,8 @@ body {
   color: @text-color;
   font-family: 'PingFang SC', PingFangSC-Regular, SourceHanSansCN-Medium,
     'HarmonyOS_Sans_Regular', SourceHanSansCN;
+  direction: var(--text-direction);
+  font-size: var(--primary-font-size);
 }
 @font-face {
   font-family: 'HarmonyOS_Sans_Regular';
@@ -320,4 +330,10 @@ body .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
 
 .ant-pro-form-light-filter-container {
   gap: 12px;
+}
+.diagram-container {
+  height: 400px;
+  width: 100%;
+  background-color: #fafafa;
+  border: 1px solid #000000;
 }

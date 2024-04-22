@@ -109,6 +109,22 @@ export const baseRoute: Routes[] = [
     },
   },
   {
+    path: RouteMaps.reactDiagrams,
+    component: lazy(() => import('@views/base/ReactDiagrams')),
+    meta: {
+      title: '登录',
+      auth: false,
+    },
+  },
+  {
+    path: RouteMaps.reactAntvX6,
+    component: lazy(() => import('@views/base/ReactAntvX6')),
+    meta: {
+      title: '登录',
+      auth: false,
+    },
+  },
+  {
     path: RouteMaps.ocrImage,
     component: lazy(() => import('@views/base/OcrImage')),
     meta: {

@@ -1,7 +1,10 @@
 import { InboxOutlined } from '@ant-design/icons';
 import { Upload, Image, Typography, Select, Button } from 'antd';
 import React, { useEffect, useState } from 'react';
+
 // import CodeEditor from '../../../components/CodeMirror/index';
+import { getTransLate } from '@/api/Table';
+import CodeEdit from '@/components/CodeEdit';
 import {
   TableUploadProps,
   // extractChineseWords,
@@ -9,8 +12,6 @@ import {
   generateObjectsFromTemplate,
   generateResultTemplate,
 } from '@/utils';
-import { getTransLate } from '@/api/Table';
-import CodeEdit from '@/components/CodeEdit';
 
 const { Title } = Typography;
 const { Dragger } = Upload;

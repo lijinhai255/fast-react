@@ -16,6 +16,18 @@ import { layoutRouteList } from './router/utils';
 import './styles/index.less';
 
 function App(): ReactElement {
+  // useEffect(() => {
+  //   const language = 'ar';
+  //   // 在 React 组件中根据语言环境设置变量
+  //   document.documentElement.style.setProperty(
+  //     '--text-direction',
+  //     language === 'ar' ? 'rtl' : 'ltr',
+  //   );
+  //   document.documentElement.style.setProperty(
+  //     '--transform',
+  //     language === 'ar' ? 'scaleX(-1)' : 'unset',
+  //   );
+  // }, []);
   return (
     <AntProvider>
       <BrowserRouter basename={config.BASENAME}>

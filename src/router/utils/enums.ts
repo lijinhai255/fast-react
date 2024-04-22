@@ -38,6 +38,8 @@ export enum RouteMaps {
   /** 登录页 */
   'login' = '/ocrTable',
   'ocrTable' = '/ocrTable',
+  'reactDiagrams' = 'reactDiagrams',
+  'reactAntvX6' = 'reactAntvX6',
   // 图片识别页面
   'ocrImage' = '/ocrImage',
   /** 修改密码 */
