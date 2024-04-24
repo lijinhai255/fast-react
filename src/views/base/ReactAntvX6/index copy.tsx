@@ -3,7 +3,7 @@ import { Graph } from '@antv/x6';
 // import { Dropdown } from 'antd';
 import React from 'react';
 
-import data from './data';
+import data from './demo';
 
 import './index.less';
 import { Cell } from '@/sdks_v2/new/enterprisesystemV2ApiDocs';

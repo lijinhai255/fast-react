@@ -5,7 +5,9 @@
   "dependencies": {
     "@ant-design/icons": "^4.8.0",
     "@ant-design/pro-components": "^2.6.11",
+    "@antv/layout": "^0.3.25",
     "@antv/x6": "^2.18.1",
+    "@antv/x6-plugin-minimap": "^2.0.7",
     "@antv/x6-react-shape": "^2.2.3",
     "@dnd-kit/core": "^6.0.8",
     "@dnd-kit/sortable": "^7.0.2",

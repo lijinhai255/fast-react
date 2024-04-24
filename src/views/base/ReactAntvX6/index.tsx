@@ -1,9 +1,12 @@
-import { Graph } from '@antv/x6';
+import { CellView, Graph, Shape } from '@antv/x6';
 // import { register } from '@antv/x6-react-shape';
 // import { Dropdown } from 'antd';
-import React from 'react';
+import { useRef, useEffect } from 'react';
+// import createRoot from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
-import data from './demo';
+import data from './data';
+import styles from './index.module.less';
 
 import './index.less';
 import { Cell } from '@/sdks_v2/new/enterprisesystemV2ApiDocs';
@@ -47,7 +50,7 @@ Graph.registerNode(
         textAnchor: 'middle',
         fontWeight: 'bold',
         fill: '#fff',
-        fontSize: 12,
+        fontSize: 22,
       },
     },
   },
@@ -96,7 +99,6 @@ Graph.registerNode(
   },
   true,
 );
-
 Graph.registerEdge(
   'lane-edge',
   {
@@ -107,23 +109,142 @@ Graph.registerEdge(
         strokeWidth: 2,
       },
     },
+    connector: 'smooth',
+    target: { cell: 'rect' },
     label: {
       attrs: {
         label: {
           fill: '#A2B1C3',
-          fontSize: 12,
+          fontSize: 10,
         },
       },
     },
   },
   true,
 );
-export default class Example extends React.Component {
-  private container: HTMLDivElement | undefined;
+const Example = () => {
+  const container = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    Shape.Rect.config({
+      width: 300,
+      height: 150,
+      attrs: {
+        body: {
+          fill: '#f5f5f5',
+          stroke: '#d9d9d9',
+          strokeWidth: 1,
+        },
+      },
+      ports: {
+        groups: {
+          in: {
+            position: { name: 'left' },
+            label: {
+              position: 'absolute', // 标签位置
+            },
+            width: 100,
+            attrs: {
+              fo: {
+                width: 100,
+                height: 22,
+                x: -50,
+                y: -5,
+                magnet: 'true',
+              },
+              circle: {
+                r: 6,
+                magnet: true,
+                stroke: '#31d0c6',
+                strokeWidth: 2,
+                fill: '#fff',
+              },
+            },
+            zIndex: 1,
+          },
+          out: {
+            position: { name: 'right' },
+            width: 100,
+            attrs: {
+              fo: {
+                width: 100,
+                height: 22,
+                x: -50,
+                y: -5,
+                magnet: 'true',
+              },
+            },
+            zIndex: 1,
+          },
+        },
+      },
+      // https://x6.antv.antgroup.com/api/model/node#portmarkup
+      // portMarkup: [
+      //   {
+      //     tagName: 'circle',
+      //     selector: 'portBody',
+      //     attrs: {
+      //       r: 5,
+      //       magnet: true,
+      //       stroke: '#31d0c6',
+      //       fill: '#fff',
+      //       strokeWidth: 2,
+      //     },
+      //   },
+      // ],
+      // portMarkup: [Markup.getForeignObjectMarkup()],
+    });
+    Shape.Rect.config({
+      width: 10,
+      height: 10,
+      attrs: {
+        body: {
+          fill: '#f5f5f5',
+          stroke: '#d9d9d9',
+          strokeWidth: 1,
+        },
+      },
+      ports: {
+        groups: {
+          circleLeft: {
+            position: { name: 'left' },
+            width: 10,
+            attrs: {
+              fo: {
+                width: 10,
+                height: 10,
+                x: -5,
+                y: 0,
+                magnet: 'true',
+              },
+            },
+          },
+          circleRight: {
+            position: { name: 'right' },
+            width: 10,
+            attrs: {
+              fo: {
+                width: 10,
+                height: 10,
+                x: -5,
+                y: 0,
+                magnet: 'true',
+              },
+            },
+          },
+        },
+      },
+    });
+    if (!container.current) {
+      return;
+    }
+    const width = container.current.offsetWidth;
+    const height = container.current.offsetHeight;
 
-  componentDidMount() {
     const graph = new Graph({
-      container: this.container,
+      container: container.current,
+      autoResize: true,
+      width,
+      height,
       background: {
         color: '#F2F7FA',
       },
@@ -143,105 +264,53 @@ export default class Example extends React.Component {
           },
         ],
       },
+      translating: {
+        restrict(cellView: CellView) {
+          const cell = cellView.cell as Node;
+          const parentId = cell.prop('parent');
+          if (parentId) {
+            const parentNode = graph.getCellById(parentId) as Node;
+            if (parentNode) {
+              return parentNode.getBBox().moveAndExpand({
+                x: 0,
+                y: 30,
+                width: 0,
+                height: -30,
+              });
+            }
+          }
+          return cell.getBBox();
+        },
+      },
+      panning: {
+        enabled: true,
+      },
+      onPortRendered(args) {
+        const { label = '-' } = args.port.attrs;
+        const { port } = args;
+        // const { title = '-' } = args.port;
+
+        const selectors = args.contentSelectors;
+        const container = selectors && selectors.foContent;
+        if (container) {
+          const root = createRoot(container); // Ensure to create the root correctly
+          if (port.group === 'circleLeft' || port.group === 'circleRight') {
+            root.render(<div className={styles.circle} />); // Render depending on the group
+          } else {
+            root.render(<div className={styles.port}>{label}</div>); // Default rendering
+          }
+        }
+      },
+      mousewheel: {
+        enabled: true,
+        zoomAtMousePosition: true,
+        modifiers: 'ctrl',
+        minScale: 0.1,
+        maxScale: 3,
+      },
+      connecting: {},
     });
-    // row 1
-    // -----
-    // graph.addNode({
-    //   x: 40,
-    //   y: 40,
-    //   width: 120,
-    //   height: 60,
-    //   label: 'rect',
-    // });
 
-    // graph.addNode({
-    //   x: 200,
-    //   y: 40,
-    //   width: 120,
-    //   height: 60,
-    //   label: 'rect',
-    //   attrs: {
-    //     body: {
-    //       fill: '#efdbff',
-    //       stroke: '#9254de',
-    //     },
-    //   },
-    // });
-
-    // graph.addNode({
-    //   x: 360,
-    //   y: 40,
-    //   width: 120,
-    //   height: 60,
-    //   label: 'rect',
-    //   attrs: {
-    //     body: {
-    //       stroke: '#237804',
-    //       fill: '#73d13d',
-    //       rx: 10,
-    //       ry: 10,
-    //     },
-    //   },
-    // });
-    // graph.addNode({
-    //   x: 160,
-    //   y: 120,
-    //   width: 360,
-    //   height: 120,
-    //   shape: 'text-block',
-    //   text: `There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.`,
-    //   attrs: {
-    //     body: {
-    //       fill: '#efdbff',
-    //       stroke: '#9254de',
-    //       rx: 4,
-    //       ry: 4,
-    //     },
-    //   },
-    // });
-    // const rect = graph.addNode({
-    //   x: 240,
-    //   y: 60,
-    //   width: 100,
-    //   height: 180,
-    //   attrs: {
-    //     body: {
-    //       fill: '#f5f5f5',
-    //       stroke: '#d9d9d9',
-    //       strokeWidth: 1,
-    //     },
-    //   },
-    //   ports: [
-    //     // 默认样式
-    //     { id: 'port1' },
-    //     // 自定义连接桩样式
-    //     {
-    //       id: 'port2',
-    //       attrs: {
-    //         circle: {
-    //           magnet: true,
-    //           r: 8,
-    //           stroke: '#31d0c6',
-    //           fill: '#fff',
-    //           strokeWidth: 2,
-    //         },
-    //       },
-    //     },
-    //   ],
-    // });
-
-    // rect.addPort({
-    //   id: 'port3',
-    //   attrs: {
-    //     circle: {
-    //       r: 6,
-    //       magnet: true,
-    //       stroke: '#31d0c6',
-    //       fill: '#fff',
-    //       strokeWidth: 2,
-    //     },
-    //   },
-    // });
     const cells: Cell[] = [];
     data.forEach((item: any) => {
       if (item.shape === 'lane-edge') {
@@ -252,22 +321,15 @@ export default class Example extends React.Component {
         cells.push(graph.createNode(item));
       }
     });
-    // @ts-ignore
-    graph.resetCells(cells);
-    graph.zoomToFit({ padding: 10, maxScale: 1 });
-    // graph.fromJSON(data);
-    graph.centerContent();
-  }
+    graph.fromJSON(data);
+    graph.centerContent(); // 将画布中元素居中展示
+  }, [container.current, data]);
 
-  refContainer = (container: HTMLDivElement) => {
-    this.container = container;
-  };
+  return (
+    <div className='react-shape-app'>
+      <div className='app-content' ref={container} />
+    </div>
+  );
+};
 
-  render() {
-    return (
-      <div className='react-shape-app'>
-        <div className='app-content' ref={this.refContainer} />
-      </div>
-    );
-  }
-}
+export default Example;
