@@ -59,6 +59,7 @@ const ApprovalManageInfo = () => {
 
   // 审批记录
   const [recordTableData, setRecordTableData] = useState<AuditLog[]>();
+  const [dataStatus, setDataStatus] = useState<number>(0);
 
   useEffect(() => {
     if (computationDataId && !isCancel) {
@@ -110,6 +111,7 @@ const ApprovalManageInfo = () => {
           auditStatus={auditStatus}
           isDetail
           pageTypeInfo={pageTypeInfo}
+          setDataStatus={setDataStatus}
         />
       )}
       {currentTab === APPROVAL_INFO && (
@@ -122,13 +124,17 @@ const ApprovalManageInfo = () => {
       <FormActions
         place='center'
         buttons={compact([
-          !isDetail && {
-            title: '审核',
-            type: 'primary',
-            onClick: async () => {
-              setOpen(true);
-            },
-          },
+          !isDetail
+            ? Number(dataStatus) === 5
+              ? {
+                  title: '审核',
+                  type: 'primary',
+                  onClick: async () => {
+                    setOpen(true);
+                  },
+                }
+              : null
+            : null,
           {
             title: '返回',
             onClick: async () => {

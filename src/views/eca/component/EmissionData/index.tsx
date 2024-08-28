@@ -20,12 +20,14 @@ const EmissionData = ({
   auditStatus,
   isDetail,
   pageTypeInfo,
+  setDataStatus,
 }: {
   id: number;
   dataId?: number;
   auditStatus?: string;
   isDetail: boolean;
   pageTypeInfo?: PageTypeInfo;
+  setDataStatus?: (value: any) => void;
 }) => {
   const navigate = useNavigate();
 
@@ -44,6 +46,7 @@ const EmissionData = ({
     if (id) {
       getComputationDataId({ id }).then(({ data }) => {
         getFillDataDetail({ ...data.data });
+        setDataStatus?.(data.data.dataStatus);
       });
     }
   }, [id]);

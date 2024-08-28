@@ -11,3 +11,11 @@ export const getTransLate = (data: {
     params: data,
   });
 };
+
+export const aiHardNumberFn = (data: any) => {
+  return request<{ data: string; code: number }>({
+    url: 'https://aiopen.zhongzaiyuntu.com/rest/v1/hard_number',
+    method: 'POST',
+    data,
+  });
+};

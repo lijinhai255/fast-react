@@ -42,7 +42,7 @@ export default defineConfig(env => {
     server: {
       /** https://cn.vitejs.dev/config/server-options.html#server-https */
       host: '0.0.0.0',
-      port: 3005,
+      port: 3010,
       watch: true,
       hrm: true,
       open: true,

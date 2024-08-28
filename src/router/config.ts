@@ -124,6 +124,14 @@ export const baseRoute: Routes[] = [
       auth: false,
     },
   },
+  // {
+  //   path: RouteMaps.gojs,
+  //   component: lazy(() => import('@views/base/gojs')),
+  //   meta: {
+  //     title: '登录',
+  //     auth: false,
+  //   },
+  // },
   {
     path: RouteMaps.ocrImage,
     component: lazy(() => import('@views/base/OcrImage')),

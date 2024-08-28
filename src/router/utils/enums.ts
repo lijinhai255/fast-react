@@ -35,6 +35,7 @@ export enum PageTypeInfo {
 export enum RouteMaps {
   'layout' = '/*',
   'home' = '/home',
+  'gojs' = '/gojs',
   /** 登录页 */
   'login' = '/ocrTable',
   'ocrTable' = '/ocrTable',

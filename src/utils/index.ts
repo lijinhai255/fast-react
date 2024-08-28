@@ -505,3 +505,132 @@ export const extractChineseWords = (data: any, path: string) => {
 
   return []; // Return empty if the final target is not as expected
 };
+
+export function addCoordinates(nodes: any[]) {
+  return nodes.map((node: any) => ({
+    ...node, // 展开原有属性
+    left: node.x, // 左坐标等于x
+    top: node.y, // 顶坐标等于y
+    right: node.x + node.width, // 右坐标等于x加上宽度
+    bottom: node.y + node.height, // 底坐标等于y加上高度
+  }));
+}
+// 找出sourcePoint所在的节点 targetPoint所在的节点
+// 函数判断点是否在节点内
+export function isPointInNode(
+  point: { x: number; y: number },
+  node: { left: number; right: number; top: number; bottom: number },
+) {
+  console.log(
+    point.x >= node.left,
+    point.x <= node.right,
+    point.y <= node.top,
+    point.y <= node.bottom,
+    '122121',
+    point,
+    node,
+  );
+  return (
+    (point.x >= node.left &&
+      point.x <= node.right &&
+      point.y <= node.top &&
+      point.y <= node.bottom) ||
+    (Number(point.x - node.right) > 0 && Number(point.x - node.right) < 5)
+  );
+}
+// 函数找出点所在的节点
+export function findNodeForPoint(
+  point: { x: number; y: number },
+  nodes: any[],
+) {
+  return nodes.find(node => isPointInNode(point, node));
+}
+
+// 定义函数计算点到节点顶部和底部的距离
+export function calculateVerticalDistances(node: {
+  top?: any;
+  bottom?: any;
+  point?: any;
+}) {
+  const { point } = node;
+  const distanceToTop = Math.abs(point.y - node.top); // 点到顶部的距离
+  const distanceToBottom = Math.abs(node.bottom - point.y); // 点到底部的距离
+  return {
+    distanceToTop,
+    distanceToBottom,
+  };
+}
+// 生成随机数
+function generateRandomNumberInRange(min: number, max: number) {
+  // 生成[min, max]范围内的随机数
+  const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+  return randomNumber;
+}
+// 判断 distanceToTop 和 distanceToBottom 哪个小，据此决定新节点坐标
+// 判断 distanceToTop 和 distanceToBottom 哪个小，据此决定新节点坐标
+// 判断 distanceToTop 和 distanceToBottom 哪个小，据此决定新节点坐标
+export function createNewNodeCoordinates(
+  sourceNode: { distanceToTop?: any; distanceToBottom?: any; point?: any },
+  targetNode: { point: { x: any; y: any } },
+  baseMargin: number,
+) {
+  const { point } = sourceNode;
+  const randomNumber = generateRandomNumberInRange(0, 20);
+  const randomTopNumber = generateRandomNumberInRange(-15, 15);
+  const randomXNumber = generateRandomNumberInRange(10, 20);
+  let newCoordinates;
+  if (sourceNode.distanceToTop < sourceNode.distanceToBottom) {
+    // 向上创建新节点
+    newCoordinates = [
+      [sourceNode.point.x + baseMargin, sourceNode.point.y],
+      [
+        sourceNode.point.x + baseMargin,
+        sourceNode.point.y -
+          sourceNode.distanceToTop -
+          baseMargin -
+          40 -
+          randomTopNumber,
+      ],
+      [
+        targetNode.point.x - baseMargin,
+        sourceNode.point.y -
+          sourceNode.distanceToTop -
+          baseMargin -
+          40 -
+          randomTopNumber,
+      ],
+      [targetNode.point.x - baseMargin, targetNode.point.y],
+    ];
+  } else if (sourceNode.point.x > targetNode.point.x) {
+    // 向下创建新节点  向左链接
+    //
+    newCoordinates = [
+      [point.x + baseMargin, point.y],
+      [
+        point.x + baseMargin,
+        point.y + sourceNode.distanceToBottom + baseMargin + randomNumber,
+      ],
+      [
+        targetNode.point.x - baseMargin - randomXNumber,
+        point.y + sourceNode.distanceToBottom + baseMargin + randomNumber,
+      ],
+      [targetNode.point.x - baseMargin - randomXNumber, targetNode.point.y],
+    ];
+  } else {
+    // 向下创建新节点  向右链接
+    newCoordinates = [
+      [point.x + baseMargin, point.y],
+      [
+        point.x + baseMargin,
+        point.y + sourceNode.distanceToBottom + baseMargin + randomNumber,
+      ],
+      [
+        targetNode.point.x - baseMargin,
+        point.y + sourceNode.distanceToBottom + baseMargin + randomNumber,
+      ],
+      [targetNode.point.x - baseMargin, targetNode.point.y],
+    ];
+  }
+
+  return newCoordinates;
+}

@@ -1,30 +1,19 @@
 import { InboxOutlined } from '@ant-design/icons';
-import { message, Upload, UploadProps } from 'antd';
+import type { UploadProps } from 'antd';
+import { message, Upload, Image } from 'antd';
 import axios, { AxiosRequestConfig } from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
 
-// import { data } from './data';
+import { data } from './data';
 
 const { Dragger } = Upload;
-const ImageWithOverlays = () => {
+
+const App: React.FC = () => {
+  const [baseUrl, setBaseUrl] = useState('');
+  const [resultData, setResultData] = useState(data);
   const imgRef = useRef(null);
   const svgRef = useRef(null);
-  const [baseUrl, setBaseUrl] = useState('');
-  const [resultData, setResultData] = useState();
-  const handleLoad = () => {
-    const img = imgRef.current;
-    const svg = svgRef.current;
-    console.log(img.width, img.height, 'img.height-img.height');
-    svg.setAttribute('viewBox', `0 0 ${img.width} ${img.height}`);
-    // data[0].result.map(info => renderPolygonFn(info));
-  };
-  useEffect(() => {
-    img.addEventListener('load', handleLoad);
-
-    return () => {
-      img.removeEventListener('load', handleLoad);
-    };
-  }, []);
+  // console.log(data, 'data-data');
   const props: UploadProps = {
     name: 'file',
     multiple: true,
@@ -57,9 +46,47 @@ const ImageWithOverlays = () => {
       console.log('Dropped files', e.dataTransfer.files);
     },
   };
+  const requestPostFn = (
+    url: any,
+    bodys: any,
+    headers: AxiosRequestConfig<any> | undefined,
+  ) => {
+    axios
+      .post(url, bodys, headers)
+      .then(({ data }) => {
+        console.log(data);
+        setResultData(data.data);
+      })
+      .catch(function (error) {
+        console.log(error, 'error-error');
+      });
+  };
+  useEffect(() => {
+    const AK = '7baba8a6d9914cfeb50113dcc0f0905e';
+    const SK = '29d3dd8780fd4ca5a651d7b0cf47bd26';
+    const URL = 'https://aiopen.zhongzaiyuntu.com/rest/v1/hard_number';
 
+    const headers = {
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: `${AK}:${SK}`,
+      },
+    };
+    const bodys = {
+      images: [baseUrl],
+    };
+    if (!baseUrl) return;
+    requestPostFn(URL, bodys, headers);
+  }, [baseUrl]);
+  const url = localStorage.getItem('baseUrl');
+  // 结果
+  const svgImage = () => {
+    const img = document.getElementById('img');
+    const svg = document.getElementById('svg');
+    console.log(img, 'img');
+    svg && svg.setAttribute('viewBox', `0 0 ${300} ${300}`);
+  };
   const renderPolygonFn = info => {
-    const svg = svgRef.current;
     // 创建用来包裹多边形的容器
     const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
     // 创建多边形元素
@@ -100,42 +127,16 @@ const ImageWithOverlays = () => {
     g.appendChild(polygon);
     svg.appendChild(g);
   };
-  const requestPostFn = (
-    url: any,
-    bodys: any,
-    headers: AxiosRequestConfig<any> | undefined,
-  ) => {
-    axios
-      .post(url, bodys, headers)
-      .then(({ data }) => {
-        console.log(data);
-        setResultData(data.data);
-        data.data[0].result.map(info => renderPolygonFn(info));
-      })
-      .catch(function (error) {
-        console.log(error, 'error-error');
-      });
-  };
   useEffect(() => {
-    const AK = '7baba8a6d9914cfeb50113dcc0f0905e';
-    const SK = '29d3dd8780fd4ca5a651d7b0cf47bd26';
-    const URL = 'https://aiopen.zhongzaiyuntu.com/rest/v1/hard_number';
-
-    const headers = {
-      headers: {
-        'Content-Type': 'application/json',
-        authorization: `${AK}:${SK}`,
-      },
-    };
-    const bodys = {
-      images: [baseUrl],
-    };
-    if (!baseUrl) return;
-    requestPostFn(URL, bodys, headers);
-  }, [baseUrl]);
-
+    svgImage();
+    resultData.forEach(item => {
+      item.result.forEach(info => {
+        renderPolygonFn(info);
+      });
+    });
+  }, [resultData]);
   return (
-    <>
+    <div>
       <Dragger {...props}>
         <p className='ant-upload-drag-icon'>
           <InboxOutlined />
@@ -152,17 +153,20 @@ const ImageWithOverlays = () => {
         id='container'
         style={{ display: 'inline-block', position: 'relative' }}
       >
-        <img ref={imgRef} id='img' src={baseUrl} alt='图片' />
+        <img
+          ref={imgRef}
+          style={{ width: '300px', height: '300px' }}
+          id='img'
+          src={url || baseUrl}
+        />
         <svg
           ref={svgRef}
-          id='svg'
           style={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
-        >
-          {/* {data[0].result.map(info => renderPolygon(info))} */}
-        </svg>
+          id='svg'
+        />
       </div>
-    </>
+    </div>
   );
 };
 
-export default ImageWithOverlays;
+export default App;

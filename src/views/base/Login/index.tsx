@@ -1,6 +1,6 @@
 import { InboxOutlined } from '@ant-design/icons';
 import { Upload, Image, Typography, Select, Button } from 'antd';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState, useTransition } from 'react';
 
 // import CodeEditor from '../../../components/CodeMirror/index';
 import { getTransLate } from '@/api/Table';
@@ -135,15 +135,37 @@ const App: React.FC = () => {
       }
     });
   };
+  const intervalRef = useRef(null);
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      console.log('Tick'); // 每隔 1 秒打印一次 'Tick'
+    }, 1000);
+    // @ts-ignore
+    intervalRef.current = intervalId; // 将 interval ID 存储到 ref 中
+
+    // 返回清理函数，当组件卸载时清除 interval
+    // @ts-ignore
+    return () => clearInterval(intervalRef.current);
+  }, []); // 空依赖数组意味着这个 effect 只会在组件挂载和卸载时执行
+  console.log(intervalRef, 'intervalRef-intervalRef');
+  const [isPending, startTransition] = useTransition();
 
   return (
     <>
+      {JSON.stringify(intervalRef.current)}= intervalRef.current
+      <div>
+        {/* //@ts-ignore */}
+        <div onClick={() => clearInterval(intervalRef.current || 0)}>
+          Clear Interval
+        </div>
+      </div>
       <div onPaste={handlePaste}>
+        121
         <Dragger {...TableUploadProps(setFileList, setWorld)}>
           <p className='ant-upload-drag-icon'>
             <InboxOutlined />
           </p>
-          <p className='ant-upload-text'>识别表格</p>
+          <p className='ant-upload-text'>识别表格1212</p>
         </Dragger>
       </div>
       <Image width='100%' src={fileList?.image} />
